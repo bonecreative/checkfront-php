@@ -19,8 +19,8 @@
         </whitelist>
     </filter>
     <php>
-        <env name="API" value="https://eaglewingtours.checkfront.com/api/3.0/"/>
-        <env name="TOKEN" value=""/>
-        <env name="SECRET" value=""/>
+        <env name="CHECKFRONT_API" value=""/>
+        <env name="CHECKFRONT_TOKEN" value=""/>
+        <env name="CHECKFRONT_SECRET" value=""/>
     </php>
 </phpunit>
