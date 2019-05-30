@@ -11,10 +11,10 @@ class ClientTest extends BaseTest{
 	 */
 	public function can_ping(){
 
-		$client = new Client(getenv('API'), getenv('TOKEN'), getenv('SECRET'));
+		$client = new Client(getenv('CHECKFRONT_API'), getenv('CHECKFRONT_TOKEN'), getenv('CHECKFRONT_SECRET'));
 		$client->ping();
 		$this->assertTrue($client->status == 200);
-		$this->assertIsArray($client->data);
+		$this->assertTrue(is_array($client->data));
 
 		$provider = $client->provider;
 		$this->assertEquals('API', $provider);
