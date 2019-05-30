@@ -15,6 +15,7 @@ class Client{
 	 * @var Guzzle
 	 */
 	private $guzzle;
+
 	/**
 	 * @var int
 	 */
