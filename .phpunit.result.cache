@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":177:{a:2:{s:7:"defects";a:1:{s:20:"ClientTest::can_ping";i:3;}s:5:"times";a:3:{s:17:"BaseTest::nothing";d:0.028;s:20:"ClientTest::can_ping";d:53.122;s:19:"ClientTest::nothing";d:0;}}}

@@ -1,0 +1,28 @@
+{
+    "name": "bonecreative/checkfront-php",
+    "description": "A composer package to CheckFront.com's 3.0 api.",
+    "keywords": [
+        "checkfront.com"
+    ],
+    "type": "library",
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "Tarek Adam",
+            "email": "tarek@bonecreative.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "BoneCreative\\CheckFront\\": "src"
+        }
+    }
+}
