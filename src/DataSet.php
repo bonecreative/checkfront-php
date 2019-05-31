@@ -25,12 +25,6 @@ class DataSet implements \Countable, \Iterator{
 		return ($this->pointer - ($this->max_per_page * ($this->page - 1)));
 	}
 
-	/**
-	 * Return the current element
-	 * @link  https://php.net/manual/en/iterator.current.php
-	 * @return mixed Can return any type.
-	 * @since 5.0.0
-	 */
 	public function current(){
 		return $this->records[$this->pagePointer()];
 	}
