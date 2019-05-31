@@ -18,6 +18,9 @@ class Client{
 	public $status = 205;
 	public $data = null;
 
+	public $stream;
+	public $chunk = [];
+
 	/**
 	 * Client constructor.
 	 *
@@ -42,6 +45,7 @@ class Client{
 	 * @param $name
 	 * @param $arguments
 	 *
+	 * @return Client
 	 * @throws Exception
 	 */
 	public function __call($name, $arguments){
@@ -68,7 +72,7 @@ class Client{
 		$call = strtolower($route_info['method']);
 
 		if($call == 'get' and !empty($params)){
-			$url .= '?'. http_build_query($params);
+			$url    .= '?' . http_build_query($params);
 			$params = [];
 		}
 
@@ -76,6 +80,7 @@ class Client{
 
 		$this->setStatusAndContent($result, $route_info);
 
+		return $this;
 	}
 
 	public function getLastCall(){
@@ -97,20 +102,13 @@ class Client{
 			$iterator,
 			\RecursiveIteratorIterator::SELF_FIRST
 		);
-		foreach ($recursive as $key => $value) {
-			if ($key === $name) {
+		foreach($recursive as $key => $value){
+			if($key === $name){
 				return $value;
 			}
 		}
 
 		return null;
-	}
-
-	/**
-	 * @return DataSet
-	 */
-	public function getRecords(){
-		return new DataSet($this);
 	}
 
 
@@ -127,9 +125,10 @@ class Client{
 				throw new Exception('Could not read CheckFront response.');
 			}
 
-			if(!empty($route_info['records'])){
-				$this->records = $this->data[$route_info['records']];
-				unset($this->data[$route_info['records']]);
+			if(!empty($route_info['chunk'])){
+				$this->chunk = $this->data[$route_info['chunk']];
+				unset($this->data[$route_info['chunk']]);
+				$this->stream = new ChunkedStream($this);
 			}
 
 		}catch(\Exception $exception){

@@ -2,7 +2,7 @@
 
 namespace BoneCreative\CheckFront;
 
-class DataSet implements \Countable, \Iterator{
+class ChunkedStream implements \Countable, \Iterator{
 
 	private $client;
 	private $page = 1;
@@ -10,7 +10,7 @@ class DataSet implements \Countable, \Iterator{
 	private $max_per_page = 100;
 	private $pointer = 0;
 	private $size = 0;
-	private $records = [];
+	private $chunk = [];
 
 	public function __construct(Client $client){
 		$this->client = $client;
@@ -26,7 +26,7 @@ class DataSet implements \Countable, \Iterator{
 	}
 
 	public function current(){
-		return $this->records[$this->pagePointer()];
+		return $this->chunk[$this->pagePointer()];
 	}
 
 	public function next(){
@@ -41,7 +41,7 @@ class DataSet implements \Countable, \Iterator{
 	}
 
 	public function valid(){
-		return !empty($this->records[$this->pagePointer()]);
+		return !empty($this->chunk[$this->pagePointer()]);
 	}
 
 	public function rewind(){
@@ -59,8 +59,8 @@ class DataSet implements \Countable, \Iterator{
 		$this->page         = $client->page;
 		$this->pages        = $client->pages;
 		$this->max_per_page = $client->limit;
-		$this->records      = array_values($client->records);
-		$this->size         = $client->total_records;
+		$this->chunk      = array_values($client->chunk);
+		$this->size         = $client->total_chunk;
 	}
 
 	private function paginate($x = null){
