@@ -4,22 +4,20 @@ namespace BoneCreative\CheckFront;
 
 class DataSet implements \Countable, \Iterator{
 
-	public $client;
-	public $page = 1;
-	public $pages = 1;
-	public $pointer = 0;
-	public $size = 0;
-	public $records = [];
+	private $client;
+	private $page = 1;
+	private $pages = 1;
+	private $pointer = 0;
+	private $size = 0;
+	private $records = [];
 
 	public function __construct(Client $client){
-
 		$this->client = $client;
 		$this->applyClientToProps($this->client);
-
 	}
 
 	private function pagePointer(){
-		return ($this->pointer - ($this->max_per_page * ($this->page -1)));
+		return ($this->pointer - ($this->max_per_page * ($this->page - 1)));
 	}
 
 	/**
@@ -68,8 +66,8 @@ class DataSet implements \Countable, \Iterator{
 
 	private function paginate($x = null){
 		$last_call = $this->client->getLastCall();
-		$method = $last_call['name'];
-		$args = $last_call['args'];
+		$method    = $last_call['name'];
+		$args      = $last_call['args'];
 
 		if(empty($args)){
 			$args = [null, []];
@@ -84,7 +82,6 @@ class DataSet implements \Countable, \Iterator{
 		if(empty($x)){
 			$args[1]['page']++;
 		}
-
 
 		$this->client->$method($args[0], $args[1]);
 		$this->applyClientToProps($this->client);
