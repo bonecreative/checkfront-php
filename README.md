@@ -1,4 +1,3 @@
-#Restricted Use
 Commercial licenses available by contacting BoneCreative.
 
 Phone: 250-984-2663
