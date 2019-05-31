@@ -135,11 +135,11 @@ class Client{
 
 			if(!empty($route_info['records'])){
 				$this->chunk = $this->data[$route_info['records']];
-				unset($this->data[$route_info['records']]);
+				//unset($this->data[$route_info['records']]);
 				$this->records = new ChunkedStream($this);
 			}elseif(!empty($route_info['record'])){
-				$this->record = $this->data[$route_info['record']];
-				unset($this->data[$route_info['record']]);
+				$this->record = $this->__get($route_info['record']);
+				//unset($this->data[$route_info['record']]);
 			}
 
 		}catch(\Exception $exception){
