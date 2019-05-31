@@ -11,20 +11,12 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client{
 
-	/**
-	 * @var Guzzle
-	 */
+
 	private $guzzle;
+	private $last_call = ['name' => '', 'args' => []];
 
-	/**
-	 * @var int
-	 */
 	public $status = 205;
-	/**
-	 * @var null
-	 */
 	public $data = null;
-
 
 	/**
 	 * Client constructor.
@@ -53,8 +45,10 @@ class Client{
 	 * @throws Exception
 	 */
 	public function __call($name, $arguments){
+		$this->last_call = ['name' => $name, 'args' => $arguments];
+
 		$arguments[0] = (!empty($arguments[0])) ? $arguments[0] : [];
-		$params       = (!empty($arguments[1])) ? $arguments[0] : [];
+		$params       = (!empty($arguments[1])) ? $arguments[1] : [];
 
 		$route_info = parse_ini_file(__DIR__ . '/../config/endpoints.ini', true);
 		if(!empty($route_info[$name])){
@@ -73,9 +67,19 @@ class Client{
 
 		$call = strtolower($route_info['method']);
 
+		if($call == 'get' and !empty($params)){
+			$url .= '?'. http_build_query($params);
+			$params = [];
+		}
+
 		$result = $this->guzzle->$call($url, $params);
 
-		$this->setStatusAndContent($result);
+		$this->setStatusAndContent($result, $route_info);
+
+	}
+
+	public function getLastCall(){
+		return $this->last_call;
 	}
 
 	/**
@@ -102,11 +106,15 @@ class Client{
 		return null;
 	}
 
+	public function getDataSet(){
+		return new DataSet($this);
+	}
+
 
 	/**
 	 * @param ResponseInterface $result
 	 */
-	private function setStatusAndContent(ResponseInterface $result){
+	private function setStatusAndContent(ResponseInterface $result, array $route_info){
 		$this->status = $result->getStatusCode();
 
 		try{
@@ -115,6 +123,12 @@ class Client{
 			if(json_last_error() !== JSON_ERROR_NONE){
 				throw new Exception('Could not read CheckFront response.');
 			}
+
+			if(!empty($route_info['records'])){
+				$this->records = $this->data[$route_info['records']];
+				unset($this->data[$route_info['records']]);
+			}
+
 		}catch(\Exception $exception){
 			$this->status = 205;
 			$this->data   = null;

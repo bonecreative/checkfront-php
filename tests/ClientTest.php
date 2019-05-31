@@ -27,4 +27,18 @@ class ClientTest extends BaseTest{
 		];
 	}
 
+	/**
+	 * @see \BoneCreative\CheckFront\Client::__call
+	 *
+	 * @test
+	 */
+	public function can_paginate_thru_result_data(){
+
+		$client = new Client(getenv('CHECKFRONT_API'), getenv('CHECKFRONT_TOKEN'), getenv('CHECKFRONT_SECRET'));
+		$this->assertTrue($client->status == 205);
+		$client->bookings(null, ['page' => 2]);
+		$this->assertTrue($client->status == 200);
+
+	}
+
 }
