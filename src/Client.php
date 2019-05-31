@@ -125,9 +125,9 @@ class Client{
 				throw new Exception('Could not read CheckFront response.');
 			}
 
-			if(!empty($route_info['chunk'])){
-				$this->chunk = $this->data[$route_info['chunk']];
-				unset($this->data[$route_info['chunk']]);
+			if(!empty($route_info['records'])){
+				$this->chunk = $this->data[$route_info['records']];
+				unset($this->data[$route_info['records']]);
 				$this->stream = new ChunkedStream($this);
 			}
 

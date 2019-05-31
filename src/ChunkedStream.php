@@ -17,7 +17,7 @@ class ChunkedStream implements \Countable, \Iterator{
 		$this->applyClientToProps($this->client);
 
 		if($this->client->page != 1){
-			$this->pointer = (($this->client->page -1) * $this->max_per_page);
+			$this->pointer = (($this->client->page - 1) * $this->max_per_page);
 		}
 	}
 
@@ -59,8 +59,8 @@ class ChunkedStream implements \Countable, \Iterator{
 		$this->page         = $client->page;
 		$this->pages        = $client->pages;
 		$this->max_per_page = $client->limit;
-		$this->chunk      = array_values($client->chunk);
-		$this->size         = $client->total_chunk;
+		$this->chunk        = array_values($client->chunk);
+		$this->size         = $client->total_records;
 	}
 
 	private function paginate($x = null){
