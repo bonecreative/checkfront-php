@@ -106,7 +106,10 @@ class Client{
 		return null;
 	}
 
-	public function getDataSet(){
+	/**
+	 * @return DataSet
+	 */
+	public function getRecords(){
 		return new DataSet($this);
 	}
 
