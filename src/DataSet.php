@@ -7,6 +7,7 @@ class DataSet implements \Countable, \Iterator{
 	private $client;
 	private $page = 1;
 	private $pages = 1;
+	private $max_per_page = 100;
 	private $pointer = 0;
 	private $size = 0;
 	private $records = [];
@@ -14,6 +15,10 @@ class DataSet implements \Countable, \Iterator{
 	public function __construct(Client $client){
 		$this->client = $client;
 		$this->applyClientToProps($this->client);
+
+		if($this->client->page != 1){
+			$this->pointer = (($this->client->page -1) * $this->max_per_page);
+		}
 	}
 
 	private function pagePointer(){
