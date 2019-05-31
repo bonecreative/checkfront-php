@@ -18,8 +18,9 @@ class Client{
 	public $status = 205;
 	public $data = null;
 
-	public $stream;
 	public $chunk = [];
+	public $record = [];
+	public $records = [];
 
 	/**
 	 * Client constructor.
@@ -78,13 +79,15 @@ class Client{
 
 		$result = $this->guzzle->$call($url, $params);
 
+		$accessor = ($name != str_plural($name)) ? 'record' : 'records';
+
+		if(empty($route_info[$accessor])){
+			$route_info[$accessor] = $name;
+		}
+
 		$this->setStatusAndContent($result, $route_info);
 
 		return $this;
-	}
-
-	public function getLastCall(){
-		return $this->last_call;
 	}
 
 	/**
@@ -97,7 +100,9 @@ class Client{
 			return $this->$name;
 		}
 
-		$iterator  = new \RecursiveArrayIterator($this->data);
+		$data = [$this->data, $this->record];
+
+		$iterator  = new \RecursiveArrayIterator($data);
 		$recursive = new \RecursiveIteratorIterator(
 			$iterator,
 			\RecursiveIteratorIterator::SELF_FIRST
@@ -114,9 +119,12 @@ class Client{
 
 	/**
 	 * @param ResponseInterface $result
+	 * @param array             $route_info
 	 */
 	private function setStatusAndContent(ResponseInterface $result, array $route_info){
 		$this->status = $result->getStatusCode();
+		$this->chunk  = [];
+		$this->record = [];
 
 		try{
 			$this->data = $result->getBody();
@@ -128,12 +136,23 @@ class Client{
 			if(!empty($route_info['records'])){
 				$this->chunk = $this->data[$route_info['records']];
 				unset($this->data[$route_info['records']]);
-				$this->stream = new ChunkedStream($this);
+				$this->records = new ChunkedStream($this);
+			}elseif(!empty($route_info['record'])){
+				$this->record = $this->data[$route_info['record']];
+				unset($this->data[$route_info['record']]);
 			}
 
 		}catch(\Exception $exception){
 			$this->status = 205;
 			$this->data   = null;
 		}
+	}
+
+	/**
+	 * @return array
+	 * @internal
+	 */
+	public function getLastCall(){
+		return $this->last_call;
 	}
 }
