@@ -60,7 +60,7 @@ class ChunkedStream implements \Countable, \Iterator{
 		$this->pages        = $client->pages;
 		$this->max_per_page = $client->limit;
 		$this->chunk        = array_values($client->chunk);
-		$this->size         = $client->total_records;
+		$this->size         = $client->request['records'];
 	}
 
 	private function paginate($x = null){
