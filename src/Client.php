@@ -3,13 +3,15 @@
 namespace BoneCreative\CheckFront;
 
 use GuzzleHttp\Client as Guzzle;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Client
  * @package BoneCreative\CheckFront
  */
-class Client{
+class Client implements Arrayable, Jsonable{
 
 
 	private $guzzle;
@@ -52,8 +54,7 @@ class Client{
 	public function __call($name, $arguments){
 		$this->last_call = ['name' => $name, 'args' => $arguments];
 
-		$arguments[0] = (!empty($arguments[0])) ? $arguments[0] : [];
-		$params       = (!empty($arguments[1])) ? $arguments[1] : [];
+		$params = (!empty($arguments[0])) ? $arguments[0] : [];
 
 		$route_info = parse_ini_file(__DIR__ . '/../config/endpoints.ini', true);
 		if(!empty($route_info[$name])){
@@ -62,13 +63,14 @@ class Client{
 			throw new Exception('Missing CheckFront route info.');
 		}
 
-		$route_param_names  = array_keys($arguments[0]);
-		$route_param_values = array_values($arguments[0]);
-
-		foreach($route_param_names as $k => $route_param_name){
-			$route_param_names[$k] = '{' . $route_param_name . '}';
+		$url = $route_info['uri'];
+		foreach($params as $k => $v){
+			$pattern = '{' . $k . '}';
+			if(strpos($url, $pattern) !== false){
+				$url = str_replace($pattern, $v, $url);
+				unset($params[$k]);
+			}
 		}
-		$url = str_replace($route_param_names, $route_param_values, $route_info['uri']);
 
 		$call = strtolower($route_info['method']);
 
@@ -125,6 +127,7 @@ class Client{
 		$this->status = $result->getStatusCode();
 		$this->chunk  = [];
 		$this->record = [];
+		$this->records = [];
 
 		try{
 			$this->data = $result->getBody();
@@ -147,6 +150,37 @@ class Client{
 			$this->status = 205;
 			$this->data   = null;
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function toArray(){
+
+		if(!empty($this->record)){
+			return $this->record;
+		}
+
+		if($this->records instanceof ChunkedStream){
+			$records = [];
+			foreach($this->records as $record){
+				$records[] = $record;
+			}
+
+			return $records;
+		}
+
+		return [];
+	}
+
+	/**
+	 * @param int $options
+	 *
+	 * @return false|string
+	 */
+	public function toJson($options = 0){
+		$data = $this->toArray();
+		return json_encode($data, $options);
 	}
 
 	/**

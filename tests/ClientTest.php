@@ -36,7 +36,7 @@ class ClientTest extends BaseTest{
 
 		$client = new Client(getenv('CHECKFRONT_API'), getenv('CHECKFRONT_TOKEN'), getenv('CHECKFRONT_SECRET'));
 		$this->assertTrue($client->status == 205);
-		$client->bookings(null, ['page' => 2]);
+		$client->bookings(['page' => 2]);
 		$this->assertTrue($client->status == 200);
 
 	}
