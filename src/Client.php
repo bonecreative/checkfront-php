@@ -137,7 +137,13 @@ class Client implements Arrayable, Jsonable{
 			}
 
 			if(!empty($route_info['records'])){
-				$this->chunk = $this->data[$route_info['records']];
+
+				$records = $this->data[$route_info['records']];
+				foreach($records as $id => &$record){
+					$record['id'] = $id;
+				}
+				$this->chunk = array_values($records);
+
 				//unset($this->data[$route_info['records']]);
 				$this->records = new ChunkedStream($this);
 			}elseif(!empty($route_info['record'])){
