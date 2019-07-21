@@ -196,4 +196,39 @@ class Client implements Arrayable, Jsonable{
 	public function getLastCall(){
 		return $this->last_call;
 	}
+
+	public static function parseFields($booking_form_ui){
+		return collect($booking_form_ui)
+			->recursive()
+			->transform(function ($item, $key){
+
+				$ret = [
+					'field' => $key,
+					'type'  => $item['define']->get('layout')->get('type'),
+					'label' => $item['define']->get('layout')->get('lbl'),
+				];
+
+				if($item['define']->get('required')){
+					$ret['rules'] = [[
+						                 'trigger' => 'blur',
+
+						                 'required' => true,
+						                 'message'  => 'required'
+					                 ]];
+				}
+
+				if($ret['type'] == 'radio' or $ret['type'] == 'filter_radio'){
+					$ret['type'] = 'select';
+				}
+
+				if($ret['type'] == 'select'){
+					$ret['options'] = $item['define']->get('layout')->get('options');
+					if(!empty($ret['rules'])){
+						$ret['rules'][0]['trigger'] = 'change';
+					}
+				}
+
+				return $ret;
+			})->values();
+	}
 }
