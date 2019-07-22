@@ -79,6 +79,10 @@ class Client implements Arrayable, Jsonable{
 			$params = [];
 		}
 
+		if($call == 'post' and !empty($params)){
+			$params = ['form_params' => $params];
+		}
+
 		$result = $this->guzzle->$call($url, $params);
 
 		$accessor = ($name != str_plural($name)) ? 'record' : 'records';
