@@ -70,16 +70,16 @@ class ChunkedStream implements \Countable, \Iterator{
 
 		if(empty($args)){
 			$args = [null, []];
-		}elseif(empty($args[1])){
-			$args[1] = [];
+		}elseif(empty($args[0])){
+			$args[0] = [];
 		}
 
-		if(empty($args[1]['page'])){
-			$args[1]['page'] = $this->page;
+		if(empty($args[0]['page'])){
+			$args[0]['page'] = $this->page;
 		}
 
 		if(empty($x)){
-			$args[1]['page']++;
+			$args[0]['page']++;
 		}
 
 		$this->client->$method($args[0], $args[1]);
