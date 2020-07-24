@@ -38,7 +38,7 @@ class Client implements Arrayable, Jsonable
 	 * @param string $client_ip
 	 * @param string $staff
 	 */
-	public function __construct(string $api, string $token, string $secret, string $client_ip = '0.0.0.0', string $staff = 'off')
+	public function __construct(string $api, string $token, string $secret, string $client_ip = '0.0.0.0', string $staff = 'false')
 	{
 		$this->api_host = $api;
 
