@@ -42,14 +42,14 @@ class Client implements Arrayable, Jsonable
 	{
 		$this->api_host = $api;
 
-		$this->guzzle = new Guzzle(['base_uri' => $api, 'auth' => [$token, $secret], 'headers' => ['X-on-behalf' => $staff,]]);
+		$this->guzzle = new Guzzle(['base_uri' => $api, 'auth' => [$token, $secret]]);
 
-//		$this->guzzle->setDefaultOption('headers', [
-//			'User-Agent'      => 'BoneCreative 0.3 FNKe',
-//			//'Authorization'   => 'Basic ' . base64_encode($token . ':' . $secret),
-//			'X-forwarded-for' => $client_ip,
-//			'X-on-behalf'     => $staff,
-//		]);
+		$this->guzzle->setDefaultOption('headers', [
+			'User-Agent'      => 'BoneCreative 0.3 FNKe',
+			'Authorization'   => 'Basic ' . base64_encode($token . ':' . $secret),
+			'X-forwarded-for' => $client_ip,
+			'X-on-behalf'     => $staff,
+		]);
 	}
 
 	/**
