@@ -272,6 +272,11 @@ class Client implements Arrayable, Jsonable
 					}
 				}
 
+				if($ret['type'] == 'radio' or $ret['type'] == 'checkboxes')
+				{
+					$ret['options'] = $item['define']->get('layout')->get('options');
+				}
+
 				return $ret;
 			})->values();
 	}

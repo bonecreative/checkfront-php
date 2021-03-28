@@ -2,7 +2,20 @@
 
 use BoneCreative\CheckFront\Client;
 
-class ClientTest extends BaseTest{
+class ClientTest extends BaseTest
+{
+
+	/**
+	 * @see \BoneCreative\CheckFront\Client::__call
+	 *
+	 * @test
+	 */
+	public function can_get_reservation_by_id()
+	{
+		$client = new Client(getenv('CHECKFRONT_API'), getenv('CHECKFRONT_TOKEN'), getenv('CHECKFRONT_SECRET'));
+		$result = $client->booking(['booking_id' => 'NNLG-280321']);
+		$x      = 5;
+	}
 
 	/**
 	 * @see \BoneCreative\CheckFront\Client::__call
@@ -10,7 +23,8 @@ class ClientTest extends BaseTest{
 	 * @dataProvider basicEndpoints
 	 * @test
 	 */
-	public function can_perform_basic_get_requests($endpoint){
+	public function can_perform_basic_get_requests($endpoint)
+	{
 
 		$client = new Client(getenv('CHECKFRONT_API'), getenv('CHECKFRONT_TOKEN'), getenv('CHECKFRONT_SECRET'));
 		$this->assertTrue($client->status == 205);
@@ -19,7 +33,8 @@ class ClientTest extends BaseTest{
 
 	}
 
-	public function basicEndpoints(){
+	public function basicEndpoints()
+	{
 		return [
 			['endpoint' => 'ping'],
 			['endpoint' => 'account'],
@@ -32,7 +47,8 @@ class ClientTest extends BaseTest{
 	 *
 	 * @test
 	 */
-	public function can_paginate_thru_result_data(){
+	public function can_paginate_thru_result_data()
+	{
 
 		$client = new Client(getenv('CHECKFRONT_API'), getenv('CHECKFRONT_TOKEN'), getenv('CHECKFRONT_SECRET'));
 		$this->assertTrue($client->status == 205);
