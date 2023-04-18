@@ -1,8 +1,7 @@
 <?php
 
-namespace BoneCreative\FacebookConversionsApi;
+namespace BoneCreative\CheckFront;
 
-use BoneCreative\CheckFront\CacheCouponsCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
