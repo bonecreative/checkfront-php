@@ -2,7 +2,7 @@
 
 namespace BoneCreative\FacebookConversionsApi;
 
-use BoneCreative\CheckFront\Commands\CacheCoupons;
+use BoneCreative\CheckFront\CacheCouponsCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
@@ -35,7 +35,7 @@ class ServiceProvider extends BaseServiceProvider
 	
 	private function bootCommands()
 	{
-		$this->commands([CacheCoupons::class]);
+		$this->commands([CacheCouponsCommand::class]);
 	}
 	
 	

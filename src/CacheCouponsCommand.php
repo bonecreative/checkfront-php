@@ -1,12 +1,11 @@
 <?php
 
-namespace BoneCreative\CheckFront\Commands;
+namespace BoneCreative\CheckFront;
 
-use App\Jobs\CacheCouponsJob;
 use App\Orm\CheckFrontAccount;
 use Illuminate\Console\Command;
 
-class CacheCoupons extends Command
+class CacheCouponsCommand extends Command
 {
 	/**
 	 * The name and signature of the console command.
