@@ -22,6 +22,7 @@ class ServiceProvider extends BaseServiceProvider
 	{
 		$this->bootCommands();
 		$this->bootRoutes();
+		$this->bootMigrations();
 	}
 	
 	/**
@@ -45,6 +46,13 @@ class ServiceProvider extends BaseServiceProvider
 	{
 		$this->loadRoutesFrom(__DIR__ . '/../routes/main.php');
 		$this->loadRoutesFrom(__DIR__ . '/../routes/grids.php');
+	}
+	
+	/**
+	 * @internal
+	 */
+	private function bootMigrations(){
+		$this->loadMigrationsFrom(__DIR__ . '/../migrations');
 	}
 	
 }
