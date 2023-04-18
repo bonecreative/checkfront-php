@@ -33,7 +33,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "BoneCreative\\CheckFront\\ServiceProvider",
+                "BoneCreative\\CheckFront\\ServiceProvider"
             ]
         }
     }
