@@ -21,6 +21,7 @@ class ServiceProvider extends BaseServiceProvider
 	public function boot()
 	{
 		$this->bootCommands();
+		$this->bootRoutes();
 	}
 	
 	/**
@@ -37,5 +38,13 @@ class ServiceProvider extends BaseServiceProvider
 		$this->commands([CacheCouponsCommand::class]);
 	}
 	
+	/**
+	 * @internal
+	 */
+	private function bootRoutes()
+	{
+		$this->loadRoutesFrom(__DIR__ . '/../routes/main.php');
+		$this->loadRoutesFrom(__DIR__ . '/../routes/grids.php');
+	}
 	
 }
