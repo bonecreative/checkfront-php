@@ -2,7 +2,7 @@
 
 namespace BoneCreative\CheckFront;
 
-use App\Orm\CheckFrontAccount;
+use BoneCreative\CheckFront\Orm\CheckFrontAccount;
 use Illuminate\Console\Command;
 
 class CacheCouponsCommand extends Command

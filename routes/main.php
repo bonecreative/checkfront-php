@@ -1,5 +1,5 @@
 <?php
-Route::group(['as' => 'checkfront::', 'prefix' => 'public-api', 'namespace' => '\\App\\Http\\Controllers\\CheckFront', 'middleware' => ['cors', 'api', 'checkfront']], function ()
+Route::group(['as' => 'checkfront::', 'prefix' => 'public-api', 'namespace' => '\\BoneCreative\\CheckFront\\Controllers', 'middleware' => ['cors', 'api', 'checkfront']], function ()
 {
 
 	Route::group(['as' => 'calendar::', 'prefix' => 'calendar'], function ()

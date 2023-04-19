@@ -2,7 +2,7 @@
 
 namespace BoneCreative\CheckFront;
 
-use App\Orm\CheckFrontSite;
+use BoneCreative\CheckFront\Orm\CheckFrontSite;
 use Closure;
 
 class Middleware{
