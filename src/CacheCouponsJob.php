@@ -2,12 +2,12 @@
 
 namespace BoneCreative\CheckFront;
 
-use App\Orm\CheckFrontAccount;
+use BoneCreative\CheckFront\Orm\CheckFrontAccount;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Cache;
 
 /**

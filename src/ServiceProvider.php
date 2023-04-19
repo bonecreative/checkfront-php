@@ -23,6 +23,7 @@ class ServiceProvider extends BaseServiceProvider
 		$this->bootCommands();
 		$this->bootRoutes();
 		$this->bootMigrations();
+		$this->bootViews();
 	}
 	
 	/**
@@ -53,6 +54,14 @@ class ServiceProvider extends BaseServiceProvider
 	 */
 	private function bootMigrations(){
 		$this->loadMigrationsFrom(__DIR__ . '/../migrations');
+	}
+	
+	/**
+	 * @internal
+	 */
+	private function bootViews(){
+		$this->loadViewsFrom(__DIR__ . '/../views', self::SHORT_NAME);
+		$this->publishes([__DIR__ . '/../views' => resource_path('views/vendor/' . self::SHORT_NAME)], 'views');
 	}
 	
 }
