@@ -3,7 +3,7 @@
 namespace BoneCreative\CheckFront\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\CacheCouponsJob;
+use BoneCreative\CheckFront\CacheCouponsJob;
 use BoneCreative\CheckFront\Client as CheckFront;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
