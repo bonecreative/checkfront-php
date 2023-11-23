@@ -90,10 +90,14 @@ class StoreRequest extends SanitizedRequest
 			                    })->toArray();
 
 		$fields = array_keys($fields);
+  
 
 		$rules = [];
 		foreach($fields as $k)
 		{
+            if($k == 'if_tour_unavailablechoose_an_o'){
+                continue;
+            }
 			$rules['form.' . $k] = 'required';
 		}
 
