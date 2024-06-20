@@ -42,6 +42,16 @@ Route::group(['as' => 'checkfront::', 'prefix' => 'public-api', 'namespace' => '
 			'as'   => 'fee',
 			'uses' => 'AncillaryController@fee',
 		]);
+        
+        Route::get('exchange-rates', [
+            'as'   => 'exchange-rates',
+            'uses' => 'AncillaryController@exchangeRates',
+        ]);
+        
+        Route::get('currencies/{currency}/symbol', [
+            'as'   => 'currency-symbol',
+            'uses' => 'AncillaryController@currencySymbol',
+        ]);
 
 	});
 });
