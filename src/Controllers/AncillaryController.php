@@ -72,7 +72,7 @@ class AncillaryController extends Controller
     
     public function currencySymbol($currency)
     {
-        return Currency::with('Symbol')->whereCode($currency)->first()->Symbol->charcter
+        return Currency::with('Symbol')->whereCode($currency)->first()->Symbol->character
             ?? '';
     }
     
